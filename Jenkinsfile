@@ -5,23 +5,21 @@ pipeline {
             args '-v /root/.m2:/root/.m2' // optional: mount Maven cache
         }
     }
-    stages {
-        stage('Build') {
-            steps {
-                sh 'mvn clean install'
-            }
-        }
-    }
 
     environment {
         IMAGE_NAME = "hello-java-jenkins"
     }
 
     stages {
-
         stage('Checkout Code') {
             steps {
-                git ''
+                git 'https://github.com/your-repo.git' // replace with your repo URL
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'mvn clean install'
             }
         }
 
@@ -36,7 +34,6 @@ pipeline {
                 sh 'docker run --rm $IMAGE_NAME'
             }
         }
-
     }
 
     post {
