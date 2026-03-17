@@ -1,10 +1,10 @@
 pipeline {
     agent {
-        docker {
-            image 'maven:3.9.0-jdk11'  // Docker image for the build
-            args '-v /root/.m2:/root/.m2' // optional: mount Maven cache
-        }
+    docker {
+      image 'abhishekf5/maven-abhishek-docker-agent:v1'
+      args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
     }
+  }
 
     environment {
         IMAGE_NAME = "hello-java-jenkins"
