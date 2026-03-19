@@ -13,6 +13,7 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
+                git branch: 'main',
                 git 'https://github.com/RevanthS1/Java-HelloWorld.git' // replace with your repo URL
             }
         }
