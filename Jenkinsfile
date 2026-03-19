@@ -13,7 +13,7 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git 'https://github.com/your-repo.git' // replace with your repo URL
+                git 'https://github.com/Java-HelloWorld.git' // replace with your repo URL
             }
         }
 
