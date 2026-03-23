@@ -1,42 +1,29 @@
 pipeline {
-    agent {
-    docker {
-      image 'abhishekf5/maven-abhishek-docker-agent:v1'
-      args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
-    }
-  }
-
-    environment {
-        IMAGE_NAME = "hello-java-jenkins"
-    }
+    agent any
 
     stages {
-        stage('Checkout Code') {
+        stage('Git checkout') {
             steps {
                 git branch: 'main',
-                   url: 'https://github.com/RevanthS1/Java-HelloWorld.git' // replace with your repo URL
+                   url: 'https://github.com/RevanthS1/Java-HelloWorld.git'
             }
         }
-
         stage('Build') {
             steps {
-                sh 'mvn clean install'
+                sh 'mvn clean package'
             }
         }
-
-        stage('Build Docker Image') {
+        stage('Docker build') {
             steps {
-                sh 'docker build -t $IMAGE_NAME .'
+                sh 'docker build -t newimage:latest .'
             }
         }
-
-        stage('Run Docker Container') {
+         stage('Docker Run') {
             steps {
-                sh 'docker run --rm $IMAGE_NAME'
+                sh 'docker run -d --rm newimage'
             }
         }
     }
-
     post {
         success {
             echo 'Pipeline executed successfully'
