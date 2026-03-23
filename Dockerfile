@@ -1,9 +1,11 @@
-FROM openjdk:17
+# Use a valid OpenJDK 17 image
+FROM eclipse-temurin:17-jdk
 
+# Set working directory
 WORKDIR /app
 
-COPY src/HelloWorld.java .
+# Copy the Maven-built JAR
+COPY target/hello-world-1.0-SNAPSHOT.jar app.jar
 
-RUN javac HelloWorld.java
-
-CMD ["java", "HelloWorld"]
+# Run the JAR
+ENTRYPOINT ["java", "-jar", "app.jar"]
